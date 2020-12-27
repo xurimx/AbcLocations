@@ -12,10 +12,8 @@
     "bootstrap": "^5.0.0-beta1",
     "bootstrap-icons": "^1.2.2",
     "core-js": "^3.6.5",
-    "googlemaps-vue3": "^1.1.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
-    "vuejs-google-maps": "0.0.10",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {

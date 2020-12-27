@@ -66,7 +66,7 @@
                         password: this.password
                     });
                     this.errors = null;
-                    this.message = "Your account was register sucessfuly. You will be redirected to login page.";
+                    this.message = "Your account was registered successfully. You will be redirected to login page.";
                     setTimeout(async () => {
                         console.log('timeout');
                      await this.$router.push({path: '/login'});

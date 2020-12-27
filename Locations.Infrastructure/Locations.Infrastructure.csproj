@@ -25,4 +25,9 @@
     <ProjectReference Include="..\Locations.Application\Locations.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Common\Helpers\" />
+    <Folder Include="Common\Responses\" />
+  </ItemGroup>
+
 </Project>

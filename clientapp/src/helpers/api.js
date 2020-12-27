@@ -1,6 +1,7 @@
 import axios from "axios";
 import store from '../store/index'
-let baseUrl = 'https://localhost:5001/api/';
+// let baseUrl = 'https://localhost:5001/api/';
+let baseUrl = 'https://abclocations.azurewebsites.net/api/';
 
 let api =  axios.create({
     baseURL: baseUrl
