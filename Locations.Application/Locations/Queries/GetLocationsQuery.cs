@@ -17,7 +17,7 @@ namespace Locations.Application.Locations.Queries
     {
         public string Search { get; set; }
         public string? OrderBy { get; set; }
-        public string? OrderDirection { get; set; }
+        public string? OrderDirection { get; set; } = "desc";
         public int? Page { get; set; } = 1;
         public int? Limit { get; set; } = 10;
     }
@@ -47,7 +47,13 @@ namespace Locations.Application.Locations.Queries
 
             if (!string.IsNullOrEmpty(request.OrderBy))
             {
-                query = query.OrderBy(request.OrderBy + "" + request.OrderDirection == "desc" ? " desc" : "");
+                string column = request.OrderBy;
+                string direction = request.OrderDirection == "desc" ? "desc" : "asc";
+                query = query.OrderBy(column + " " + direction);
+            }
+            else
+            {
+                query = query.OrderBy("created desc");
             }
 
             int filtered = query.Count();

@@ -44,7 +44,6 @@ namespace Locations.Infrastructure
 
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IUserRepository, UserRepository>();
-            services.AddTransient<IMapsService, MapsService>();
 
             return services;
         }

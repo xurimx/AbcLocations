@@ -26,7 +26,7 @@ namespace Locations.Application.Locations.Queries
         }
         public async Task<Location> Handle(GetLocationByIdQuery request, CancellationToken cancellationToken)
         {
-            Location location = await context.Locations.FirstOrDefaultAsync(x => x.Id == request.Id);
+            Location location = await context.Locations.Include(x => x.City).FirstOrDefaultAsync(x => x.Id == request.Id);
             return location;
         }
     }

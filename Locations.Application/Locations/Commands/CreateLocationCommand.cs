@@ -24,36 +24,30 @@ namespace Locations.Application.Locations.Commands
     public class CreateLocationCommandHandler : IRequestHandler<CreateLocationCommand, Location>
     {
         private readonly IAppDbContext context;
-        private readonly IMapsService mapsService;
 
-        public CreateLocationCommandHandler(IAppDbContext context, IMapsService mapsService)
+        public CreateLocationCommandHandler(IAppDbContext context)
         {
             this.context = context;
-            this.mapsService = mapsService;
         }
         public async Task<Location> Handle(CreateLocationCommand request, CancellationToken cancellationToken)
         {
-            string cityName = await mapsService.GetCityNameAsync(request.Longitude, request.Latitude);
-            if (cityName.Equals(request.City, StringComparison.InvariantCultureIgnoreCase))
+            City city = await context.Cities.FirstOrDefaultAsync(x => x.Name.ToLower().Equals(request.City.ToLower()));
+            if (city == null)
             {
-                City city = await context.Cities.FirstOrDefaultAsync(x => x.Name.Equals(cityName, StringComparison.InvariantCultureIgnoreCase));
-                if (city == null)
-                {
-                    throw new LocationException("An Error has occurred while getting the city");
-                }
-                Location location = new Location
-                {
-                    Address = request.Address,
-                    CityId = city.Id,
-                    Latitude = request.Latitude,
-                    Longitude = request.Longitude,
-                    Name = request.Name
-                };
-                context.Locations.Add(location);
-                await context.SaveChangesAsync();
-                return location;
+                throw new LocationException("An Error has occurred while getting the city");
             }
-            throw new LocationException("Longitude and Latitude do not belog to the selected City");
+            Location location = new Location
+            {
+                Address = request.Address,
+                CityId = city.Id,
+                Latitude = request.Latitude,
+                Longitude = request.Longitude,
+                Name = request.Name
+            };
+            context.Locations.Add(location);
+            await context.SaveChangesAsync();
+            return location;
+
         }
     }
 }

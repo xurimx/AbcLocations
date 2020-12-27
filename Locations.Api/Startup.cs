@@ -68,12 +68,16 @@ namespace Locations.Api
         {
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
+               // app.UseDeveloperExceptionPage();
+            }
+            else
+            {
             }
             app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Locations.Api v1"));
+            app.UseCors("all");
 
             app.UseHttpsRedirection();
 

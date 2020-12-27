@@ -80,9 +80,19 @@ namespace Locations.Api
         {
             ctx.Cities.AddRange(new City[]
             {
-                new City { Name = "Prizren", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
-                new City { Name = "Prishtine", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
-                new City { Name = "Gjakove", Created = DateTime.UtcNow,  CreatedBy = "seeder" }
+                new City { Name = "Berlin", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Amsterdam", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Ljubljana", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Belgrade", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Zagreb", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Sarajevo", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Prishtina", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Rome", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Paris", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Madrid", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Istanbul", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Moscow", Created = DateTime.UtcNow,  CreatedBy = "seeder" },
+                new City { Name = "Stockholm", Created = DateTime.UtcNow,  CreatedBy = "seeder" }
             });
         }
     }

@@ -25,12 +25,10 @@ namespace Locations.Application.Locations.Commands
     public class UpdateLocationCommandHandler : IRequestHandler<UpdateLocationCommand, Location>
     {
         private readonly IAppDbContext context;
-        private readonly IMapsService service;
 
-        public UpdateLocationCommandHandler(IAppDbContext context, IMapsService service)
+        public UpdateLocationCommandHandler(IAppDbContext context)
         {
             this.context = context;
-            this.service = service;
         }
         public async Task<Location> Handle(UpdateLocationCommand request, CancellationToken cancellationToken)
         {
@@ -39,25 +37,20 @@ namespace Locations.Application.Locations.Commands
             {
                 throw new LocationException("No location was found for id: " + request.Id);
             }
-            string cityName = await service.GetCityNameAsync(request.Longitude, request.Latitude);
 
-            if (cityName.Equals(request.City, StringComparison.InvariantCultureIgnoreCase))
+            City city = await context.Cities.FirstOrDefaultAsync(x => x.Name.ToLower().Equals(request.City.ToLower()));
+            if (city == null)
             {
-                City city = await context.Cities.FirstOrDefaultAsync(x => x.Name.Equals(cityName, StringComparison.InvariantCultureIgnoreCase));
-                if (city == null)
-                {
-                    throw new LocationException("An Error has occurred while getting the city");
-                }
-                location.Address = request.Address;
-                location.CityId = city.Id;
-                location.Latitude = request.Latitude;
-                location.Longitude = request.Longitude;
-                location.Name = request.Name;
-                context.Locations.Update(location);
-                await context.SaveChangesAsync();
-                return location;
+                throw new LocationException("An Error has occurred while getting the city");
             }
-            throw new LocationException("Longitude and Latitude do not belog to the selected City");
+            location.Address = request.Address;
+            location.CityId = city.Id;
+            location.Latitude = request.Latitude;
+            location.Longitude = request.Longitude;
+            location.Name = request.Name;
+            context.Locations.Update(location);
+            await context.SaveChangesAsync();
+            return location;
         }
     }
 }

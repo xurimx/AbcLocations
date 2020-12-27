@@ -27,7 +27,7 @@ namespace Locations.Application.Cities.Commands
         }
         public async Task<City> Handle(CreateCityCommand request, CancellationToken cancellationToken)
         {
-            City city = await context.Cities.FirstOrDefaultAsync(x => x.Name.Equals(request.Name, StringComparison.InvariantCultureIgnoreCase));
+            City city = await context.Cities.FirstOrDefaultAsync(x => x.Name.ToLower().Contains(request.Name.ToLower()));
             if (city == null)
             {
                 city = new City { Name = request.Name };
