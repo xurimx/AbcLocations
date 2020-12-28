@@ -53,12 +53,16 @@
         methods: {
             ...mapActions('cities', ['submitForm']),
             ...mapMutations('cities', ['toggleCreateModal']),
+            ...mapMutations(['setLoading']),
             createCity: async function(){
                 try {
+                    this.setLoading(true);
                     await this.submitForm({form: this.form});
                     this.toggleCreateModal();
                 }catch (e) {
                     this.errors = e.response.data;
+                }finally {
+                    this.setLoading(false);
                 }
             }
         }

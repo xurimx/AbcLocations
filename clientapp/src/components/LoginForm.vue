@@ -31,7 +31,7 @@
 </template>
 
 <script>
-   import {mapActions} from 'vuex';
+    import {mapActions, mapMutations} from 'vuex';
     export default {
         name: "LoginForm",
         data() {
@@ -43,10 +43,13 @@
         },
         methods: {
             ...mapActions(['authenticate', 'userinfo']),
+            ...mapMutations(['setLoading']),
+
             login: async function (event) {
                 event.preventDefault();
                 console.log('clicked');
                 try {
+                    this.setLoading(true);
                     await this.authenticate({
                         username: this.username,
                         password: this.password
@@ -56,6 +59,8 @@
                 }catch (e) {
                     console.log(e.response);
                     this.errors = e.response.data;
+                }finally {
+                    this.setLoading(false);
                 }
             },
         }

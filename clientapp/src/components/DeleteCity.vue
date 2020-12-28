@@ -53,14 +53,18 @@
         methods:{
             ...mapActions('cities', ['deleteCity']),
             ...mapMutations('cities', ['toggleDeleteModal']),
+            ...mapMutations(['setLoading']),
 
             deleteSelected: async function () {
                 try {
+                    this.setLoading(true);
                     await this.deleteCity({id: this.form.id});
                     this.toggleDeleteModal();
                     this.$router.push();
                 }catch (e) {
                     console.log(e.response);
+                }finally {
+                    this.setLoading(false);
                 }
             }
         },

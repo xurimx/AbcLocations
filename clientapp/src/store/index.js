@@ -82,6 +82,9 @@ const store = createStore({
         },
         componentKey: state => {
             return state.componentKey;
+        },
+        loading: state => {
+            return state.loading;
         }
     }
 });

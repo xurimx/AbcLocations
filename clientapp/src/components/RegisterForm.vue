@@ -42,7 +42,7 @@
 </template>
 
 <script>
-   import {mapActions} from 'vuex';
+    import {mapActions, mapMutations} from 'vuex';
     export default {
         name: "RegisterForm",
         data() {
@@ -56,10 +56,12 @@
         },
         methods:{
             ...mapActions(['createAccount']),
+            ...mapMutations(['setLoading']),
             register: async function(event){
                 event.preventDefault();
                 console.log('register');
                 try {
+                    this.setLoading(true);
                     await this.createAccount({
                         username: this.username,
                         email: this.email,
@@ -74,6 +76,8 @@
                 }catch (e) {
                     console.log(e);
                     this.errors = e.response.data;
+                }finally {
+                    this.setLoading(false);
                 }
             },
         }

@@ -5,6 +5,7 @@
   <delete-city v-if="showDelete" @close="toggleDeleteModal"></delete-city>
   <create-location v-if="showCreateLoc" @close="toggleCreateModalLoc"></create-location>
   <delete-location v-if="showDeleteLoc" @close="toggleDeleteModalLoc"></delete-location>
+  <spinner v-if="loading"></spinner>
 </template>
 
 <script>
@@ -14,9 +15,10 @@
   import DeleteCity from "./components/DeleteCity";
   import CreateLocation from "./components/CreateLocation";
   import DeleteLocation from "./components/DeleteLocation";
+  import Spinner from "./components/Spinner";
 
   export default {
-    components: {CreateLocation, DeleteCity, CreateCity, CityDetails, DeleteLocation},
+    components: {Spinner, CreateLocation, DeleteCity, CreateCity, CityDetails, DeleteLocation},
     async beforeCreate() {
       this.$store.commit('initialiseStore');
     },
@@ -35,7 +37,7 @@
       }
     },
     computed: {
-      ...mapGetters(['role']),
+      ...mapGetters(['role', 'loading']),
       ...mapGetters('cities', ['showInfo', 'showCreate', 'showDelete']),
       ...mapGetters('locations', {'showCreateLoc':'showCreate', 'showDeleteLoc': 'showDelete'})
     },

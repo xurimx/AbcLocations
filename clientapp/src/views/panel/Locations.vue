@@ -113,8 +113,11 @@
         methods:{
             ...mapActions('locations', ['fetchLocations']),
             ...mapMutations('locations', ['toggleCreateModal', 'toggleDeleteModal','setQuery', 'selectLocation']),
+            ...mapMutations(['setLoading']),
             fetch: async function () {
+                this.setLoading(true);
                 await this.fetchLocations();
+                this.setLoading(false);
             },
             gotoPage: async function(page){
                 let query = this.query;

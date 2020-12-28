@@ -126,12 +126,13 @@
         methods: {
             ...mapActions('locations', ['fetchLocation', 'updateLocation']),
             ...mapActions('cities', ['fetchCities']),
-            ...mapMutations(['incrementKey']),
+            ...mapMutations(['incrementKey', 'setLoading']),
             back: function () {
                 this.$router.push({name:'Locations'});
             },
             update: async function(){
                 try {
+                    this.setLoading(true);
                     await this.updateLocation({form: this.form});
                     this.errors = null;
                     this.message = "Changes were successfully saved!";
@@ -145,6 +146,8 @@
                 }catch (e) {
                     console.log(e);
                     this.errors = e.response.data;
+                }finally {
+                    this.setLoading(false);
                 }
             },
             setMarkers: function (lng, lat) {
@@ -169,6 +172,7 @@
         },
         async created() {
             this.form.id = this.$route.params.id;
+            this.setLoading(true);
             await this.fetchLocation({id: this.form.id});
             await this.fetchCities();
 
@@ -179,6 +183,7 @@
             this.form.city = this.selectedLocation.city.name;
             this.form.latitude = this.selectedLocation.latitude;
             this.form.longitude = this.selectedLocation.longitude;
+            this.setLoading(false);
         },
     }
 

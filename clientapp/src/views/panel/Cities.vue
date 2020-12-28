@@ -53,6 +53,7 @@
         methods: {
             ...mapActions('cities', ['fetchCities']),
             ...mapMutations('cities', ['selectCity', 'toggleInfoModal', 'toggleCreateModal', 'toggleDeleteModal']),
+            ...mapMutations(['setLoading']),
             showModal(city) {
                this.selectCity({city});
                this.toggleInfoModal();
@@ -64,10 +65,13 @@
         },
         async created() {
             try {
+                this.setLoading(true);
                 this.fetchCities();
                 console.log(this.cities);
             } catch (e) {
                 console.log(e);
+            }finally {
+                this.setLoading(false);
             }
         }
     }

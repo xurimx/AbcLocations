@@ -53,15 +53,19 @@
         methods:{
             ...mapActions('locations', ['deleteLocation', "fetchLocations"]),
             ...mapMutations('locations', ['toggleDeleteModal']),
+            ...mapMutations(['setLoading']),
 
             deleteSelected: async function () {
                 try {
+                    this.setLoading(true);
                     await this.deleteLocation({id: this.form.id});
                     this.toggleDeleteModal();
                     await this.$router.push({name: 'Locations'});
                     //await this.fetchLocations();
                 }catch (e) {
                     console.log(e.response);
+                }finally {
+                    this.setLoading(false);
                 }
             }
         },
